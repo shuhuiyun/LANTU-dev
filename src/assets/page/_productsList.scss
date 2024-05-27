@@ -1,0 +1,65 @@
+@use '../vendors-extensions/variables' as *;
+.products-list__menu {
+  border-radius: 0 80px 0 0;
+
+  ul {
+    padding-top: 80px;
+  }
+
+  li:hover {
+    transition: ease-in-out 0.3s;
+    background-color: #ffffff1c;
+  }
+}
+.logout-button {
+  position: sticky;
+  left: 0;
+  bottom: 0;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0 0.5em;
+}
+.tr-style {
+  tr td:first-child {
+    border-radius: 12px 0 0 12px;
+  }
+  tr td:last-child {
+    border-radius: 0px 12px 12px 0px;
+    border: #ffffff1c 15px;
+  }
+}
+
+.product__button {
+  i {
+    color: #d9d9d9;
+  }
+  margin: 0 10px;
+  border: 0;
+  background-color: rgba(255, 255, 255, 0);
+}
+.product__button.edit {
+  &:hover {
+    i {
+      color: $primary;
+    }
+  }
+  position: relative;
+  &::after {
+    content: '';
+    width: 1.5px;
+    background-color: #d9d9d9;
+    height: 1.5rem;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    right: -11.5px;
+  }
+}
+.product__button.del {
+  &:hover {
+    i {
+      color: $danger;
+    }
+  }
+}

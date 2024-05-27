@@ -1,0 +1,15 @@
+@use '../vendors/bootstrap' as *;
+.Info__content {
+  .Info__label {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+  }
+
+  @include media-breakpoint-down(md) {
+    .Info__label {
+      flex-direction: column;
+      align-items: start;
+    }
+  }
+}

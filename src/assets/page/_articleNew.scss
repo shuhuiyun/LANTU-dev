@@ -1,0 +1,55 @@
+@use '../vendors-extensions/variables' as *;
+@use '../vendors/bootstrap' as *;
+.ArticlesNew {
+  .article__tag {
+    a {
+      color: $gray-700;
+      background-color: $light;
+      border-radius: 8px;
+      padding: 5px 12px;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out;
+    }
+    a:hover {
+      background-color: $gray-300;
+    }
+  }
+  img {
+    border-radius: 25px;
+  }
+  .article__slot {
+    font-weight: bolder;
+    border: 1px solid $primary;
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 80px;
+  }
+  .back__link {
+    text-decoration: none;
+  }
+  .article__content {
+    strong {
+      color: $primary;
+    }
+    ol {
+      padding-left: 24px;
+      list-style-type: disc;
+      li {
+        margin-bottom: 15px;
+        &::marker {
+          color: $info;
+        }
+      }
+    }
+    ul {
+      padding-left: 24px;
+      list-style-type: square;
+      li {
+        margin-bottom: 15px;
+        &::marker {
+          color: $info;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,94 @@
+@use '../vendors-extensions/variables' as *;
+@use '../vendors/bootstrap' as *;
+nav {
+  h1 {
+    width: 100%;
+    height: 38px;
+    background-size: 100% 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-indent: 101%; /*首行縮排到超過100%*/
+    overflow: hidden; /*超過div的範圍就隱藏*/
+    white-space: nowrap; /*不斷行*/
+    background-position: center;
+  }
+  .nav__logo--lg {
+    max-width: 417px;
+    background-image: url('@/assets/images/footer_logo.png');
+  }
+  .nav__logo--sm {
+    max-width: 120px;
+    background-image: url('@/assets/images/footer_logo_sm.png');
+  }
+}
+.nav__shop-button {
+  background-color: #fff;
+  position: fixed;
+  top: 1.5rem;
+  right: 10rem;
+  display: none;
+  padding-left: 3rem !important;
+  .icon {
+    display: inline-block;
+    top: 2px;
+    left: 18px;
+    position: absolute;
+  }
+
+  @include media-breakpoint-up(md) {
+    display: block;
+  }
+}
+.nav__menu-button {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  padding-left: 3rem !important;
+  span,
+  &::after,
+  &::before {
+    content: '';
+    width: 0.8rem;
+    background-color: rgb(255, 255, 255);
+    height: 1px;
+    content: '';
+    position: absolute;
+    top: 47%;
+    left: 1.4rem;
+  }
+  &::after {
+    top: 40%;
+  }
+  &::before {
+    top: 55%;
+  }
+}
+
+.app_container {
+  @include media-breakpoint-down(md) {
+    margin-top: 90px;
+  }
+}
+.nav--sm {
+  position: fixed;
+  border-bottom: 1px solid #8d8d90;
+  width: 100vw;
+  margin: 0;
+  top: 0;
+}
+.badges {
+  background-color: $danger;
+  color: $light;
+  padding: 2px 5px;
+  border-radius: 50px;
+  display: block;
+  position: absolute;
+  min-width: 23px;
+  top: -3px;
+  right: -3px;
+  font-size: 10px;
+  &.mobile {
+    top: -3px;
+    right: -16px;
+  }
+}

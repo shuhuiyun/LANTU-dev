@@ -1,0 +1,60 @@
+$primary: rgb(40, 84, 172);
+$danger: rgb(189, 46, 46);
+$dark: rgb(37, 37, 43);
+$info: rgb(84, 199, 199);
+$gray-300: #d9d9d9;
+$gray-600: #8d8d90;
+$gray-700: #465059;
+$green: #198754 !default;
+
+// 新增色彩
+$secondary: rgb(20, 36, 116);
+$light: #f3f3f6;
+
+//新增文字大小
+$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+
+$h1-font-size: $font-size-base * 2.5 !default;
+$h2-font-size: $font-size-base * 2 !default;
+$h3-font-size: $font-size-base * 1.75 !default;
+$h4-font-size: $font-size-base * 1.5 !default;
+$h5-font-size: $font-size-base * 1.25 !default;
+$h6-font-size: $font-size-base !default;
+
+$font-sizes: (
+  1: $h1-font-size,
+  2: $h2-font-size,
+  3: $h3-font-size,
+  4: $h4-font-size,
+  5: $h5-font-size,
+  6: $h6-font-size,
+  7: 0.875rem,
+) !default;
+
+//按鈕
+$border-radius-pill: 50rem !default;
+$btn-border-radius: $border-radius-pill !default;
+$btn-border-radius-sm: $border-radius-pill !default;
+$btn-border-radius-lg: $border-radius-pill !default;
+
+$input-btn-padding-y: 0.625rem !default;
+$input-btn-padding-x: 1.5rem !default;
+$btn-font-size: 12px;
+//陰影
+$box-shadow: 0 0rem 0.4rem rgba($dark, 0.25);
+
+$modal-fade-transform: translate(0, 0px) !default;
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+$pagination-border-radius: 25px !default;
+$progress-bg: #d9d9d9;

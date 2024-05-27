@@ -1,0 +1,72 @@
+@use '../vendors-extensions/variables' as *;
+@use '../vendors/bootstrap' as *;
+
+.step__button {
+  z-index: 3;
+  position: relative;
+  min-width: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .step__icon {
+    background-color: $gray-300;
+    width: 41px;
+    height: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .finish__icon {
+    border: 1px solid $primary;
+    background-color: #8fa3d1;
+  }
+  &.active {
+    min-width: 72px;
+    .step__icon {
+      background-color: $primary;
+      width: 57px;
+      height: 57px;
+
+      i {
+        color: $light;
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+.step__line {
+  position: absolute;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 1;
+  top: 45%;
+  width: 90%;
+}
+$padding-width: 5%;
+$padding-width-lg: 15%;
+.order__padding {
+  padding: 0 $padding-width;
+  @include media-breakpoint-up(lg) {
+    padding: 0 $padding-width-lg;
+  }
+}
+.order__padding-right {
+  padding-right: $padding-width;
+  @include media-breakpoint-up(lg) {
+    padding-right: $padding-width-lg;
+  }
+}
+.order__padding-left {
+  padding-left: $padding-width;
+  @include media-breakpoint-up(lg) {
+    padding-left: $padding-width-lg;
+  }
+}
+.text-gray {
+  color: $gray-600;
+}

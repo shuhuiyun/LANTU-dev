@@ -1,0 +1,21 @@
+@use '../vendors-extensions/variables' as *;
+@use '../vendors/bootstrap' as *;
+
+.article-list {
+  img {
+    border-radius: 25px;
+  }
+  a {
+    text-decoration: none;
+  }
+  .article__sort {
+    border: 1px $primary solid;
+    padding: 3px 10px;
+    border-radius: 5px;
+  }
+  ul {
+    li:not(:last-child) {
+      border-bottom: 1px $gray-300 solid;
+    }
+  }
+}

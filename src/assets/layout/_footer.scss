@@ -1,0 +1,57 @@
+@use '../vendors/bootstrap' as *;
+
+.footer {
+  padding: 1.5rem;
+}
+
+// 跑馬燈
+$img-heigth: 176px;
+$img-width: 1952px;
+.footer__marquee {
+  height: $img-heigth;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  div {
+    display: flex;
+    width: $img-width * 2;
+    position: absolute;
+    overflow: hidden;
+    animation: marquee 20s linear infinite;
+    span {
+      display: inline-block;
+    }
+  }
+  img {
+    width: 100%;
+    opacity: 0.5;
+  }
+  @keyframes marquee {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: $img-width * -1;
+    }
+  }
+}
+
+.footer__info {
+  img {
+    width: 100%;
+    max-width: 306px;
+  }
+  .icon-buttom {
+    margin-right: 9px;
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    padding: 7px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+}

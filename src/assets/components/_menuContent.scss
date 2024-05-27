@@ -1,0 +1,83 @@
+@use '../vendors-extensions/variables' as *;
+@use '../vendors/bootstrap' as *;
+
+.light__content {
+  .title-color {
+    color: $light;
+  }
+  .subtitle-color {
+    color: $light;
+  }
+  .arrow-color {
+    color: $light;
+  }
+  .border-line {
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.5),
+      2px,
+      transparent 2px,
+      transparent 8px
+    );
+    &.border-line:last-child {
+      background-image: linear-gradient(
+        90deg,
+        rgb(20, 36, 116, 00),
+        2px,
+        transparent 2px,
+        transparent 8px
+      );
+    }
+  }
+}
+
+.primary__content {
+  .title-color {
+    color: $primary;
+  }
+  .subtitle-color {
+    color: rgb(20, 36, 116, 0.5);
+  }
+  .arrow-color {
+    color: $info;
+  }
+  .border-line {
+    background-image: linear-gradient(
+      90deg,
+      rgb(20, 36, 116, 0.5),
+      2px,
+      transparent 2px,
+      transparent 8px
+    );
+    &.border-line:last-child {
+      background-image: linear-gradient(
+        90deg,
+        rgb(20, 36, 116, 00),
+        2px,
+        transparent 2px,
+        transparent 8px
+      );
+    }
+  }
+}
+
+.border-line {
+  background-position: 0px 100%;
+  background-repeat: repeat-x;
+  background-size: 5px 1px;
+
+  position: relative;
+}
+.linkHover:hover {
+  .bg-link {
+    transition: 0.2s ease-in-out transform;
+
+    transform: translate3d(0.3em, 0, 0);
+  }
+}
+.linkHover {
+  .bg-link {
+    transition: 0.2s ease-in-out transform;
+    transform: translate3d(0, 0, 0);
+  }
+}

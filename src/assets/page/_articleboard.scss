@@ -1,0 +1,40 @@
+@use '../vendors-extensions/variables' as *;
+@use '../vendors/bootstrap' as *;
+
+.article {
+  .main__contain {
+    margin-top: 20vh;
+
+    border-radius: 80px 0 0 0;
+    padding: 80px 15%;
+    @include media-breakpoint-down(md) {
+      .main__contain {
+        padding: 10%;
+      }
+    }
+  }
+  .info {
+    padding: 80px;
+    background-image: linear-gradient(
+        rgba(20, 36, 116, 0.88),
+        rgba(20, 36, 116, 0.88)
+      ),
+      url('@/assets/images/article_info_bg.jpg');
+    img {
+      border-radius: 0 40px 40px 40px;
+      max-width: 400px;
+    }
+  }
+  @include media-breakpoint-down(md) {
+    .info {
+      padding: 8%;
+      text-align: center;
+    }
+  }
+  .info__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+  }
+}

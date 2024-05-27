@@ -1,0 +1,45 @@
+@use '../vendors/bootstrap' as *;
+.modal {
+  position: fixed;
+}
+.modal-header {
+  padding: 1.5rem !important;
+}
+.modal-menu__btn {
+  padding-left: 2.625rem !important;
+  position: relative;
+  &::after,
+  &::before {
+    content: '';
+    width: 0.8rem;
+    background-color: rgb(20, 36, 116);
+    height: 1px;
+    content: '';
+    position: absolute;
+    top: 47%;
+    left: 1.4rem;
+  }
+  &::after {
+    transform: rotate(45deg);
+  }
+  &::before {
+    transform: rotate(-45deg);
+  }
+}
+
+.modal-body {
+  .contain-img {
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+  }
+  img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    border-radius: 0 0 80px 0;
+    height: 80vh;
+    width: 45vw;
+  }
+}
