@@ -8,13 +8,14 @@
     :style="`background-color: ${$route.meta.backgroundColor || '#ffffff'};
     `"
   >
-    <Navbar
-      :cartBtn="this.$route.meta.cartButton"
-      :menuBtn="this.$route.meta.menuButton"
-      :homeLogo="this.$route.meta.logo"
-    ></Navbar>
+    <MainNavbar
+      :cartBtn="$route.meta.cartButton"
+      :menuBtn="$route.meta.menuButton"
+      :homeLogo="$route.meta.logo"
+    ></MainNavbar>
     <router-view />
-    <Footer v-if="Footer == undefined ? true : Footer"></Footer>
+    <MainFooter v-if="Footer == undefined ? true : Footer"></MainFooter>
+    <ToastMessages />
   </div>
 </template>
 
@@ -22,8 +23,10 @@
 @import './assets/all.css';
 </style>
 <script>
-import Footer from '@/components/MainFooter.vue';
-import Navbar from '@/components/MainNavbar.vue';
+import emitter from '@/methods/emitter';
+import ToastMessages from '@/components/ToastMessages.vue';
+import MainFooter from '@/components/MainFooter.vue';
+import MainNavbar from '@/components/MainNavbar.vue';
 
 export default {
   data() {
@@ -37,10 +40,15 @@ export default {
     };
   },
   components: {
-    Footer,
-    Navbar,
+    MainFooter,
+    MainNavbar,
+    ToastMessages,
   },
-
+  provide() {
+    return {
+      emitter,
+    };
+  },
   updated() {
     this.Footer = this.$route.meta.footer;
   },

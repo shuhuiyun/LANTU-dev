@@ -50,18 +50,30 @@ export default {
       },
     };
   },
+
+  inject: ['emitter', '$httpMessageState'],
   methods: {
     signIn() {
       const api = `${process.env.VUE_APP_API}admin/signin`;
-      this.$http.post(api, this.user).then((res) => {
-        if (res.data.success) {
-          const { token, expired } = res.data;
-          document.cookie = `userToken=${token}; expires=${new Date(expired)};`;
-          this.$router.push('dashboard/products');
-        }
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .post(api, this.user)
+        .then((res) => {
+          if (res.data.success) {
+            console.log(res);
+            const { token, expired } = res.data;
+            document.cookie = `userToken=${token}; expires=${new Date(
+              expired,
+            )};`;
+            this.$router.push('dashboard/products');
+          }
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '登入失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
   },
 };

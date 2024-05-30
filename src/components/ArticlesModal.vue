@@ -48,7 +48,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-primary d-block w-100 mb-5"
-                  @click.prevent="uploadFile"
+                  @click="uploadFile"
                 >
                   新增圖片
                 </button>
@@ -62,7 +62,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-danger"
-                  @click.prevent="delImage()"
+                  @click="delImage()"
                 >
                   移除
                 </button>
@@ -130,7 +130,7 @@
                       <button
                         type="button"
                         class="btn btn-sm border-0 pe-0"
-                        @click.prevent="delTag(index)"
+                        @click="delTag(index)"
                       >
                         <i class="bi bi-x-lg px-0"></i>
                       </button>
@@ -150,7 +150,7 @@
                       class="btn btn-outline-secondary"
                       type="button"
                       id="button-addon2"
-                      @click.prevent="addTags"
+                      @click="addTags"
                     >
                       確認
                     </button>
@@ -186,7 +186,7 @@
           <button
             type="button"
             class="btn btn-primary"
-            @click.prevent="$emit('update-product', tempProduct)"
+            @click="$emit('update-product', tempProduct)"
           >
             上傳
           </button>
@@ -252,6 +252,7 @@ export default {
   components: {
     Ckeditor: CKEditor.component,
   },
+  inject: ['emitter', '$httpMessageState'],
   methods: {
     delTag(item) {
       this.tempProduct.tag.splice(item, 1);
@@ -271,14 +272,21 @@ export default {
 
       formData.append('file-to-upload', uploadedFile);
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/admin/upload`;
-      this.$http.post(api, formData).then((res) => {
-        if (res.data.success) {
-          this.tempProduct.image = res.data.imageUrl;
-          this.$refs.fileInput.value = '';
-        }
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .post(api, formData)
+        .then((res) => {
+          if (res.data.success) {
+            this.tempProduct.image = res.data.imageUrl;
+            this.$refs.fileInput.value = '';
+          }
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得文章失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
 
     delImage() {

@@ -72,11 +72,33 @@
         ></a>
       </div>
     </div>
+    <div>
+      <div class="mb-3 d-block d-md-none">
+        <div class="input-group pt-4">
+          <input
+            v-model="coupon_code"
+            type="text"
+            class="form-control"
+            placeholder="輸入優惠券"
+            aria-label="輸入優惠券"
+            aria-describedby="button-addon2"
+          />
+          <button
+            class="btn btn-primary"
+            type="button"
+            id="button-addon2"
+            @click="addCouponCode"
+          >
+            送出
+          </button>
+        </div>
+      </div>
+    </div>
     <div
       class="row py-4 order__padding-left justify-content-between flex-column flex-lg-row align-items-end align-items-lg-start"
     >
       <!-- 優惠券輸入 -->
-      <div class="col-10 p-4 p-lg-0 col-md-6 col-lg-4 mb-3">
+      <div class="col-10 p-4 p-lg-0 col-md-6 col-lg-4 mb-3 d-none d-md-block">
         <div class="input-group mb-3">
           <input
             v-model="coupon_code"
@@ -90,7 +112,7 @@
             class="btn btn-primary"
             type="button"
             id="button-addon2"
-            @click.prevent="addCouponCode"
+            @click="addCouponCode"
           >
             送出
           </button>
@@ -131,7 +153,7 @@
     <div class="row justify-content-between order__padding mt-4">
       <button
         type="button"
-        @click.prevent="$router.push('/user/cart')"
+        @click="$router.push('/user/cart')"
         class="col-auto col-lg-auto btn btn-outline-primary order__btn"
       >
         繼續購物
@@ -139,7 +161,7 @@
       <button
         type="button"
         class="col-auto col-lg-auto btn btn-primary order__btn"
-        @click.prevent="$router.push('/order/info')"
+        @click="$router.push('/order/info')"
       >
         下一步
       </button>
@@ -158,7 +180,7 @@
       <button
         type="button"
         class="btn btn-primary px-5"
-        @click.prevent="$router.push('/user/cart')"
+        @click="$router.push('/user/cart')"
       >
         前往購物
       </button>
@@ -177,54 +199,90 @@ export default {
       isCouponCode: false,
     };
   },
-  inject: ['emitter'],
+
+  inject: ['emitter', '$httpMessageState'],
   methods: {
     addCouponCode() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/coupon`;
       const cart = { code: this.coupon_code };
-      this.$http.post(api, { data: cart }).then(() => {
-        this.isCouponCode = true;
-        this.getProducts();
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .post(api, { data: cart })
+        .then(() => {
+          this.isCouponCode = true;
+          this.getProducts();
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     changeProduct(id, num) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/cart`;
       const cart = { product_id: id, qty: num };
-      this.$http.post(api, { data: cart }).then(() => {
-        this.getProducts();
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .post(api, { data: cart })
+        .then(() => {
+          this.getProducts();
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     delProduct(id) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/cart/${id}`;
-      this.$http.delete(api).then(() => {
-        this.getProducts();
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .delete(api)
+        .then(() => {
+          this.getProducts();
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     updateProducts(item, num) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/cart/${item.id}`;
       const cart = { product_id: item.product_id, qty: num };
-      this.$http.put(api, { data: cart }).then(() => {
-        this.getProducts();
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .put(api, { data: cart })
+        .then(() => {
+          this.getProducts();
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/cart`;
-      this.$http.get(api).then((res) => {
-        this.isLoading = false;
-        this.product = res.data.data.carts;
-        this.total.final_total = res.data.data.final_total;
-        this.total.total = res.data.data.total;
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.isLoading = false;
+          this.product = res.data.data.carts;
+          this.total.final_total = res.data.data.final_total;
+          this.total.total = res.data.data.total;
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
   },
   created() {

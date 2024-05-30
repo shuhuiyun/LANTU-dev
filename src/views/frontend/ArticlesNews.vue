@@ -41,7 +41,7 @@
               </h5>
               <p class="m-0">
                 <router-link
-                  class="me-3 text-dark text-opacity-50"
+                  class="me-3 text-dark text-opacity-50 text-nowrap d-inline-block mb-1"
                   v-for="(tag, index) in item.tag"
                   :key="`${tag}${index+1}`"
                   to="/article/search_tag"

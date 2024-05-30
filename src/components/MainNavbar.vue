@@ -10,12 +10,19 @@
         <h1 class="align-content-center m-0 nav__logo--sm">LAN-TU</h1>
       </a>
     </div>
+    <!-- <a href="https://www.instagram.com/"
+    target="_blank" class="icon-buttom position-relative"
+    aria-label="Ins">
+    <i class="bi bi-instagram text-white
+    position-absolute top-50 start-50 translate-middle"></i></a> -->
     <div
       class="col-auto p-1"
       style="min-width: 45px"
       v-if="cartBtn == undefined ? true : cartBtn"
     >
-      <a href="#" @click.prevent="$router.push('/order/cart')" aria-label="cart"
+      <a href="#" class="d-block h-100 position-relative"
+      @click.prevent="$router.push('/order/cart')"
+      aria-label="cart"
         ><i class="bi bi-cart2 fs-4 text-primary position-relative"
           ><span class="badges mobile text-center" v-if="getQty">{{
             getQty
@@ -28,8 +35,10 @@
       v-if="menuBtn == undefined ? true : menuBtn"
       style="min-width: 45px"
     >
-      <a href="#" aria-label="menu" @click.prevent="$refs.menuModal.showModal()"
-        ><i class="bi bi-list fs-4 text-primary"></i
+      <a href="#" class="d-block h-100 position-relative"
+      aria-label="menu" @click.prevent="$refs.menuModal.showModal()"
+        ><i class="bi bi-list fs-4 text-primary
+        position-absolute top-50 start-50 translate-middle"></i
       ></a>
     </div>
   </nav>
@@ -51,7 +60,7 @@
             type="button"
             class="btn btn-light fw-bold text-primary m-0 shadow nav__shop-button"
             style="z-index: 100"
-            @click.prevent="$router.push('/order/cart')"
+            @click="$router.push('/order/cart')"
             v-if="cartBtn == undefined ? true : cartBtn"
           >
             <span class="icon"><i class="bi bi-cart2 fs-5"></i></span>
@@ -61,7 +70,7 @@
             type="button"
             class="btn btn-primary m-0 shadow nav__menu-button"
             v-if="menuBtn == undefined ? true : menuBtn"
-            @click.prevent="$refs.menuModal.showModal()"
+            @click="$refs.menuModal.showModal()"
             style="z-index: 100"
           >
             <span></span>MENU

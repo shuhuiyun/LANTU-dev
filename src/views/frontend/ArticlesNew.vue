@@ -10,7 +10,7 @@
     </p>
     <p class="pt-3">
       <span
-        class="me-3 article__tag"
+        class="me-3 article__tag text-nowrap d-inline-block mb-3"
         v-for="(item, index) in article.tag"
         :key="`${item}${index+1}`"
         ><router-link

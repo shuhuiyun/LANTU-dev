@@ -31,14 +31,22 @@
 </template>
 <script>
 export default {
+  inject: ['emitter', '$httpMessageState'],
   methods: {
     logout() {
       const api = `${process.env.VUE_APP_API}logout`;
-      this.$http.post(api, this.user).then(() => {
-        this.$router.push('/login');
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .post(api, this.user)
+        .then(() => {
+          this.$router.push('/login');
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '登出失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
   },
 };

@@ -3,35 +3,40 @@
     <!-- logo -->
     <div class="logo position-relative">
       <img
-        src="../assets/images/logo.svg"
+        src="../../assets/images/logo.svg"
         class="w-100 px-5 d-none d-md-block z-3"
         alt="LANTU LTD(藍圖印刷Logo)"
       />
       <img
-        src="../assets/images/logo-sm.svg"
+        src="../../assets/images/logo-sm.svg"
         class="w-100 px-2 d-md-none position-relative z-3"
         alt="LANTU(藍圖印刷Logo)"
       />
     </div>
     <!-- main -->
 
-    <div class="row" style="height: 700px">
-      <div class="col-auto home__image-main ps-0">
+    <div class="row main__banner">
+      <div class="col-auto home__image-main ps-0 position-relative">
         <img
-          src="../assets/images/menu-img.jpg"
+          src="../../assets/images/menu-img.jpg"
           class="img-fluid"
           alt="設計樣本和印刷品，包括一張藍色卡片，展示在開放的雜誌上，背景為淺灰色大理石桌面，呈現專業現代設計風格。"
         />
+        <router-link to="/user/cart">
+          <button class="position-absolute d-block d-md-none fs-4 py-2 px-4">
+            印刷小物線上購買<i class="bi bi-arrow-right-circle-fill ms-3"></i>
+          </button>
+        </router-link>
       </div>
       <div class="col d-none d-md-flex primary__content home__content">
-        <menuContent></menuContent>
+        <MenuContent/>
       </div>
       <div
         class="col-auto d-none d-md-block home__image-secondary"
         style="width: 17%"
       >
         <img
-          src="../assets/images/home_img_02.jpg"
+          src="../../assets/images/home_img_02.jpg"
           class="img-fluid"
           alt="大型工業打印機正在打印彩色標籤，背景為工廠環境，展示出高精度的印刷技術。"
         />
@@ -49,7 +54,7 @@
             我們將從數據出發，提供從印刷服務策略制定到方案設計與執行的全方位市場營銷支援。
           </p>
 
-          <ul class="d-flex row row-cols-2 row-cols-md-2 row-cols-lg-4 p-0">
+          <ul class="d-flex row row-cols-1 row-cols-md-2 row-cols-lg-4 p-0">
             <li class="col" v-for="item in serviclesList" :key="item.title">
               <div class="text-center position-relative">
                 <img
@@ -87,7 +92,7 @@
       <div class="d-flex bg-white px-0 position-relative">
         <div class="articles__image-left ps-0">
           <img
-            src="../assets/images/home_img_03.jpg"
+            src="../../assets/images/home_img_03.jpg"
             class="img-fluid"
             alt="
 一張滿版印刷的深藍色漸層海報與各式專業現代設計風格海報，以及供客戶選擇特別色的標準樣本，展示於桌面上。"
@@ -95,7 +100,7 @@
         </div>
         <div class="articles__image-right ps-0">
           <img
-            src="../assets/images/article_info_bg.jpg"
+            src="../../assets/images/article_info_bg.jpg"
             class="img-fluid"
             alt="有水彩暈染風格的精裝書籍，標題與封面側邊含有精緻的燙金技術。"
           />
@@ -142,7 +147,7 @@
                                 <div
                                   class="col-auto mb-3 p-0 me-3"
                                   v-for="(tag, index) in item.tag"
-                                  :key="`${tag}${index+1}`"
+                                  :key="`${tag}${index + 1}`"
                                 >
                                   <router-link
                                     class="fs-7 fw-bold articles_tag"
@@ -181,7 +186,7 @@
             </div>
           </div>
         </div>
-        <div class="" style="background-color: white; width: 8%"></div>
+        <div style="background-color: white; width: 8%"></div>
       </div>
     </div>
 
@@ -192,11 +197,13 @@
           <span class="fs-6 fw-bold">印刷小物<span></span> </span>
           Shopping
         </p>
-        <button type="button" class="shopping_button d-none d-md-block">
-          <i class="bi bi-arrow-right-short"></i>
-          <span class="shoppimg__btn--line"></span>
-          <span></span>
-        </button>
+        <router-link to="/user/cart">
+          <button type="button" class="shopping_button d-none d-md-block">
+            <i class="bi bi-arrow-right-short"></i>
+            <span class="shoppimg__btn--line"></span>
+            <span></span>
+          </button>
+        </router-link>
       </div>
 
       <div class="shopping">
@@ -210,7 +217,7 @@
         </p>
         <div class="shopping__img">
           <img
-            src="../assets/images/home_shopping.jpg"
+            src="../../assets/images/home_shopping.jpg"
             class="img-fluid"
             alt="設計樣本和印刷品，色彩明亮、現代簡約風格的書籍和雜誌展示，突顯我們專業的設計風格及印刷技術。"
           />
@@ -236,30 +243,36 @@
         <div class="row justify-content-center">
           <div class="col-auto px-5 d-none d-md-block">
             <img
-              src="../assets/images/article_info_picture.jpg"
+              src="../../assets/images/article_info_picture.jpg"
               class="img-fluid"
               alt="設計樣本和印刷品，包括精裝本書籍、一本淺藍色便條紙，以及手帳攤開展示在桌面上，呈現專業現代設計風格。"
             />
           </div>
-          <div class="col-auto text-white fw-bold d-flex flex-column justify-content-center">
-            <div class="row d-flex flex-column align-items-center ">
+          <div
+            class="col-auto text-white fw-bold d-flex flex-column justify-content-center"
+          >
+            <div class="row d-flex flex-column align-items-center">
               <div class="col">
                 <p class="mb-0">
                   關於印刷、設計專案
                   <br />
                   若有相關問題歡迎與我們聯繫
                 </p>
-
               </div>
               <div class="col">
-                <a href="tel:+886-2-22349876"
-                class="link-light link-underline-opacity-0 fs-2">
-                <span><i class="bi bi-telephone-fill me-3"></i></span
-                  >02-2234-9876</a>
-
+                <a
+                  href="tel:+886-2-22349876"
+                  class="link-light link-underline-opacity-0 fs-2"
+                >
+                  <span><i class="bi bi-telephone-fill me-3"></i></span
+                  >02-2234-9876</a
+                >
               </div>
               <div class="col">
-                <button type="button" class="btn btn-light text-primary fs-7 mt-3">
+                <button
+                  type="button"
+                  class="btn btn-light text-primary fs-7 mt-3"
+                >
                   <a
                     href="mailto:lantu@gmail.com"
                     class="link-offset-2 link-underline link-underline-opacity-0"
@@ -283,7 +296,7 @@
 <script>
 import { mapState, mapActions } from 'pinia';
 import articlesList from '@/stores/articles';
-import menuContent from '@/components/MenuContent.vue';
+import MenuContent from '@/components/MenuContent.vue';
 
 export default {
   data() {
@@ -342,7 +355,7 @@ export default {
   },
 
   components: {
-    menuContent,
+    MenuContent,
   },
   created() {
     this.getArticleList();

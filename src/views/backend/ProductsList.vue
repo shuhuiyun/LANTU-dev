@@ -6,7 +6,7 @@
       <div class="col-6 text-start h3 fw-bold m-0 text-dark">商品列表</div>
 
       <div class="col-6 text-end">
-        <button type="button" class="btn btn-primary" @click.prevent="openModal(true)">
+        <button type="button" class="btn btn-primary" @click="openModal(true)">
           新增產品
         </button>
       </div>
@@ -38,7 +38,7 @@
             <button
               type="button"
               class="product__button edit"
-              @click.prevent="openModal(false, item)"
+              @click="openModal(false, item)"
             >
               <i class="bi bi-pen-fill"></i>
             </button>
@@ -46,7 +46,7 @@
             <button
               type="button"
               class="product__button del"
-              @click.prevent="openDelModal(item)"
+              @click="openDelModal(item)"
             >
               <i class="bi bi-trash-fill"></i>
             </button>
@@ -54,25 +54,28 @@
         </tr>
       </tbody>
     </table>
-    <Pagination @emit-page="getProducts" :pages="pagination"></Pagination>
+    <PageNavigation
+      @emit-page="getProducts"
+      :pages="pagination"
+    />
   </div>
 
   <ProductModal
     @update-product="updateProduct"
     :product="tempProduct"
     ref="productModal"
-  ></ProductModal>
-  <DelProductModal
+  />
+  <DelModal
     :product="tempProduct"
     :title="title"
     @del-product="delProduct"
     ref="delProductModal"
-  ></DelProductModal>
+  />
 </template>
 <script>
-import ProductModal from '../components/ProductModal.vue';
-import DelProductModal from '../components/DelModal.vue';
-import Pagination from '../components/PageNavigation.vue';
+import ProductModal from '@/components/ProductModal.vue';
+import DelModal from '@/components/DelModal.vue';
+import PageNavigation from '@/components/PageNavigation.vue';
 
 export default {
   data() {
@@ -87,21 +90,28 @@ export default {
   },
   components: {
     ProductModal,
-    DelProductModal,
-    Pagination,
+    DelModal,
+    PageNavigation,
   },
   inject: ['emitter', '$httpMessageState'],
   methods: {
     getProducts(page = 1) {
       this.isLoading = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/admin/products/?page=${page}`;
-      this.$http.get(api).then((res) => {
-        this.isLoading = false;
-        this.products = res.data.products;
-        this.pagination = res.data.pagination;
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.isLoading = false;
+          this.products = res.data.products;
+          this.pagination = res.data.pagination;
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得商品失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     openModal(isNew, item) {
       if (isNew) {
@@ -124,15 +134,19 @@ export default {
         httpMethod = 'put';
       }
       const producComponent = this.$refs.productModal;
-      this.$http[httpMethod](api, { data: this.tempProduct }).then(
-        (response) => {
+      this.$http[httpMethod](api, { data: this.tempProduct })
+        .then((response) => {
           this.$httpMessageState(response, '更新商品狀態');
           this.getProducts();
           producComponent.hideModal();
-        },
-      ).catch((error) => {
-        console.error('錯誤:', error);
-      });
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得商品失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     openDelModal(item) {
       this.tempProduct = { ...item };
@@ -143,12 +157,19 @@ export default {
       const delProducComponent = this.$refs.delProductModal;
       this.tempProduct = item;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/admin/product/${item.id}`;
-      this.$http.delete(api, this.tempProduct).then(() => {
-        delProducComponent.hideModal();
-        this.getProducts();
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .delete(api, this.tempProduct)
+        .then(() => {
+          delProducComponent.hideModal();
+          this.getProducts();
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得商品失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
   },
   created() {

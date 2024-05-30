@@ -6,7 +6,11 @@
       <div class="col-6 text-start h3 fw-bold m-0 text-dark">顧客訂單</div>
 
       <div class="col-6 text-end">
-        <button type="button" class="btn btn-danger" @click.prevent="delorder()">
+        <button
+          type="button"
+          class="btn btn-danger"
+          @click.prevent="delorder()"
+        >
           刪除全部訂單
         </button>
       </div>
@@ -32,7 +36,7 @@
           <td>{{ item.user.email }}</td>
           <td class="text-right">
             <ul class="list-unstyled">
-              <li v-for="(product) in item.products" :key="product.product.id">
+              <li v-for="product in item.products" :key="product.product.id">
                 {{ product.product.title }} 數量：{{ product.qty }}
                 {{ product.product.unit }}
               </li>
@@ -48,7 +52,7 @@
             <button
               type="button"
               class="product__button edit"
-              @click.prevent="openModal(item)"
+              @click="openModal(item)"
             >
               <i class="bi bi-eye-fill"></i>
             </button>
@@ -56,7 +60,7 @@
             <button
               type="button"
               class="product__button del"
-              @click.prevent="openDelModal(item)"
+              @click="openDelModal(item)"
             >
               <i class="bi bi-trash-fill"></i>
             </button>
@@ -65,25 +69,28 @@
       </tbody>
     </table>
 
-    <Pagination @emit-page="getProducts" :pages="pagination"></Pagination>
+    <PageNavigation
+      @emit-page="getProducts"
+      :pages="pagination"
+    />
   </div>
   <div class="fs-2" v-if="!orders">目前還沒有訂單。</div>
-  <ProductModal
+  <OrderModal
     @update-product="updateProduct"
     :order="tempProduct"
     ref="productModal"
-  ></ProductModal>
-  <DelProductModal
+  />
+  <DelModal
     :product="tempProduct"
     :title="title"
     @del-product="delProduct"
     ref="delProductModal"
-  ></DelProductModal>
+  />
 </template>
 <script>
-import ProductModal from '../components/OrderModal.vue';
-import DelProductModal from '../components/DelModal.vue';
-import Pagination from '../components/PageNavigation.vue';
+import OrderModal from '@/components/OrderModal.vue';
+import DelModal from '@/components/DelModal.vue';
+import PageNavigation from '@/components/PageNavigation.vue';
 
 export default {
   data() {
@@ -96,29 +103,43 @@ export default {
     };
   },
   components: {
-    ProductModal,
-    DelProductModal,
-    Pagination,
+    OrderModal,
+    DelModal,
+    PageNavigation,
   },
   inject: ['emitter', '$httpMessageState'],
   methods: {
     delorder() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/admin/orders/all`;
-      this.$http.delete(api).then(() => {}).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .delete(api)
+        .then(() => {})
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     getProducts(page = 1) {
       this.isLoading = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/admin/orders/?page=${page}`;
-      this.$http.get(api).then((res) => {
-        this.isLoading = false;
-        this.orders = res.data.orders;
-        console.log(this.orders);
-        this.pagination = res.data.pagination;
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.isLoading = false;
+          this.orders = res.data.orders;
+          console.log(this.orders);
+          this.pagination = res.data.pagination;
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     openModal(item) {
       this.tempProduct = { ...item };
@@ -136,12 +157,19 @@ export default {
       const delProducComponent = this.$refs.delProductModal;
       this.tempProduct = item;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/admin/order/${item.id}`;
-      this.$http.delete(api, this.tempProduct).then(() => {
-        delProducComponent.hideModal();
-        this.getProducts();
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .delete(api, this.tempProduct)
+        .then(() => {
+          delProducComponent.hideModal();
+          this.getProducts();
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
   },
   created() {

@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import HomeView from '../views/frontend/HomeView.vue';
 
 const routes = [
   {
@@ -15,7 +15,7 @@ const routes = [
     path: '/about',
     name: 'about',
 
-    component: () => import('../views/AboutView.vue'),
+    component: () => import('../views/frontend/AboutView.vue'),
   },
   {
     path: '/login',
@@ -27,7 +27,7 @@ const routes = [
       cartButton: false,
       title: '登入 - 藍圖印刷',
     },
-    component: () => import('../views/UserLogin.vue'),
+    component: () => import('../views/backend/UserLogin.vue'),
   },
   {
     path: '/dashboard',
@@ -39,33 +39,33 @@ const routes = [
       cartButton: false,
       title: '後台管理 - 藍圖印刷',
     },
-    component: () => import('../views/DashBoard.vue'),
+    component: () => import('../views/backend/DashBoard.vue'),
     children: [
       {
         path: 'products',
         name: 'products',
-        component: () => import('../views/ProductsList.vue'),
+        component: () => import('../views/backend/ProductsList.vue'),
       },
       {
         path: 'order',
         name: 'order',
-        component: () => import('../views/OrderList.vue'),
+        component: () => import('../views/backend/OrderList.vue'),
       },
       {
         path: 'coupons',
         name: 'coupons',
-        component: () => import('../views/CouponsList.vue'),
+        component: () => import('../views/backend/CouponsList.vue'),
       },
       {
         path: 'articles',
         name: 'articles',
-        component: () => import('../views/ArticlesList.vue'),
+        component: () => import('../views/backend/ArticlesList.vue'),
       },
     ],
   },
   {
     path: '/article',
-    component: () => import('../views/ArticlesBoard.vue'),
+    component: () => import('../views/frontend/ArticlesBoard.vue'),
     meta: {
       bgImage: true,
       backgroundColor: '#f3f3f6',
@@ -74,21 +74,21 @@ const routes = [
     children: [
       {
         path: 'news',
-        component: () => import('../views/ArticlesNews.vue'),
+        component: () => import('../views/frontend/ArticlesNews.vue'),
       },
       {
         path: 'search_tag',
-        component: () => import('../views/ArticlesTag.vue'),
+        component: () => import('../views/frontend/ArticlesTag.vue'),
       },
       {
         path: 'new/:newId',
-        component: () => import('../views/ArticlesNew.vue'),
+        component: () => import('../views/frontend/ArticlesNew.vue'),
       },
     ],
   },
   {
     path: '/ordertrack',
-    component: () => import('../views/OrderTrack.vue'),
+    component: () => import('../views/frontend/OrderTrack.vue'),
     meta: {
       bgImage: false,
       bgImage2: true,
@@ -98,34 +98,34 @@ const routes = [
     children: [
       {
         path: 'search',
-        component: () => import('../views/TrackOrder.vue'),
+        component: () => import('../views/frontend/TrackOrder.vue'),
       },
       {
         path: 'search/:ordermail',
-        component: () => import('../views/TrackUser.vue'),
+        component: () => import('../views/frontend/TrackUser.vue'),
       },
     ],
   },
   {
     path: '/user',
-    component: () => import('../views/UserBoard.vue'),
+    component: () => import('../views/frontend/UserBoard.vue'),
     meta: {
       title: '精選商品 - 藍圖印刷',
     },
     children: [
       {
         path: 'cart',
-        component: () => import('../views/UserCart.vue'),
+        component: () => import('../views/frontend/UserCart.vue'),
       },
       {
         path: 'product/:productId',
-        component: () => import('../views/UserProduct.vue'),
+        component: () => import('../views/frontend/UserProduct.vue'),
       },
     ],
   },
   {
     path: '/order',
-    component: () => import('../views/OrderBoard.vue'),
+    component: () => import('../views/frontend/OrderBoard.vue'),
     meta: {
       cartButton: false,
       backgroundColor: '#f3f3f6',
@@ -134,22 +134,23 @@ const routes = [
     children: [
       {
         path: 'cart',
-        component: () => import('../views/OrderCart.vue'),
+        component: () => import('../views/frontend/OrderCart.vue'),
       },
       {
         path: 'info',
-        component: () => import('../views/OrderInfo.vue'),
+        component: () => import('../views/frontend/OrderInfo.vue'),
       },
       {
         path: 'confirm',
-        component: () => import('../views/OrderConfirm.vue'),
+        component: () => import('../views/frontend/OrderConfirm.vue'),
       },
       {
         path: 'finish',
-        component: () => import('../views/OrderFinish.vue'),
+        component: () => import('../views/frontend/OrderFinish.vue'),
       },
     ],
   },
+  { path: '/:pathMatch(.*)*', redirect: '/' },
 ];
 
 const router = createRouter({

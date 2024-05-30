@@ -88,7 +88,7 @@
           </div>
 
           <div class="col-12 d-flex Info__label mb-md-4">
-            <p class="text-nowrap me-2 m-0">
+            <p class="text-nowrap me-2 m-0 mt-2">
               取貨<span class="text-danger">*</span>
             </p>
             <div class="row d-flex flex-row">
@@ -143,7 +143,7 @@
             </div>
           </div>
           <div class="col-12 d-flex Info__label mb-md-4">
-            <p class="text-nowrap me-2 m-0">
+            <p class="text-nowrap me-2 m-0 mt-2">
               付款<span class="text-danger">*</span>
             </p>
             <div class="row d-flex flex-row">
@@ -201,7 +201,7 @@
             <label
               for="textarea"
               class="form-label align-items-start w-100 Info__label"
-              ><p class="text-nowrap me-2 m-0 pt-md-2">
+              ><p class="text-nowrap me-2 m-0 pt-md-2 mt-2">
                 留言<span class="text-danger opacity-0">*</span>
               </p>
               <textarea
@@ -249,7 +249,7 @@
       <!-- 按鈕 -->
       <div class="row justify-content-between mt-4 order__padding">
         <button
-          @click.prevent="$router.push('/order/cart')"
+          @click="$router.push('/order/cart')"
           type="button"
           class="col-auto col-lg-auto btn btn-outline-primary order__btn"
         >
@@ -276,17 +276,24 @@ export default {
     };
   },
   props: ['userdata'],
-
+  inject: ['emitter', '$httpMessageState'],
   methods: {
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/cart`;
-      this.$http.get(api).then((res) => {
-        this.isLoading = false;
-        this.total.final_total = res.data.data.final_total;
-        this.total.total = res.data.data.total;
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.isLoading = false;
+          this.total.final_total = res.data.data.final_total;
+          this.total.total = res.data.data.total;
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     onSubmit() {
       this.$emit('userdata', this.data);

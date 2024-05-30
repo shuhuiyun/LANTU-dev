@@ -28,7 +28,7 @@
               alt="設計樣本和印刷品，包括一張藍色卡片，展示在開放的雜誌上，背景為淺灰色大理石桌面，呈現專業現代設計風格。"
             />
           </div>
-          <menuContent class="col-auto mx-auto"></menuContent>
+          <MenuContent class="col-auto mx-auto"></MenuContent>
         </div>
       </div>
     </div>
@@ -37,11 +37,11 @@
 
 <script>
 import modal from '@/mixin/ModalMixins';
-import menuContent from '@/components/MenuContent.vue';
+import MenuContent from '@/components/MenuContent.vue';
 
 export default {
   components: {
-    menuContent,
+    MenuContent,
   },
   data() {
     return {

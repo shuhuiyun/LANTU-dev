@@ -40,7 +40,7 @@
         <a href="tel:+886-2-22349876"  class="link-light link-underline-opacity-0">02-2234-9876</a>
         <ul class="d-flex ps-0 mt-3">
           <li>
-            <a href="" class="icon-buttom position-relative" aria-label="Line"
+            <a href="#" class="icon-buttom position-relative" aria-label="Line"
               ><i
                 class="bi bi-line text-white position-absolute top-50 start-50 translate-middle"
               ></i

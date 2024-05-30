@@ -6,30 +6,40 @@
       訂單查詢
     </div>
     <div class="col-auto px-5" style="padding-top: 10%">
-      <div class="input-group">
+      <VForm v-slot="{ errors }" ref="observer" @submit="search(email)">
         <div class="input-group">
-          <input
-            v-model="email"
-            type="text"
+          <!-- <input
+              v-model="email"
+              type="text"
+              class="form-control"
+              placeholder="輸入信箱"
+              aria-label="輸入信箱"
+              aria-describedby="button-addon2"
+            /> -->
+          <VField
+            name="信箱"
             class="form-control"
-            placeholder="輸入信箱"
-            aria-label="輸入信箱"
-            aria-describedby="button-addon2"
+            id="inputEmail"
+            type="email"
+            v-model="email"
+            :class="{ 'is-invalid': errors['信箱'] }"
+            rules="email|required"
           />
 
           <button
             class="btn btn-outline-secondary"
-            type="button"
+            type="submit"
             id="button-addon2"
-            @click.prevent="search(email)"
+            style="border-radius: 0 50rem 50rem 0"
           >
             查詢
           </button>
+          <ErrorMessage ref="error" name="信箱" class="invalid-feedback p-0" />
         </div>
-        <div class="text-danger p-2 fs-7" v-if="!emailCheck">
+        <!-- <div class="text-danger p-2 fs-7" v-if="!emailCheck && !errors['信箱']">
           未查詢到該訂單，請嘗試在輸入一次。
-        </div>
-      </div>
+        </div> -->
+      </VForm>
       <ol class="track__ol fs-7 mt-3" style="padding-bottom: 20%">
         <li>請於訂購完成後三天內付款，否則訂單將被取消。</li>
         <li>
@@ -42,6 +52,7 @@
       </ol>
     </div>
   </div>
+
 </template>
 <script>
 export default {
@@ -53,7 +64,8 @@ export default {
       tempUser: {},
     };
   },
-  watch: {},
+  inject: ['emitter', '$httpMessageState'],
+
   methods: {
     search(email) {
       const [...order] = this.orders;
@@ -64,19 +76,32 @@ export default {
         this.$router.push(`/ordertrack/search/${email}`);
       } else {
         this.emailCheck = false;
-        this.email = '';
+
+        this.$refs.observer.resetForm();
+        this.emitter.emit('push-message', {
+          style: 'danger',
+          title: '查無訂單',
+          content: '未查詢到該訂單，請嘗試在輸入一次。',
+        });
       }
     },
 
     getOrders(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/orders/?page=${page}`;
-      this.$http.get(api).then((res) => {
-        this.orders = res.data.orders;
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.orders = res.data.orders;
 
-        this.pagination = res.data.pagination;
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+          this.pagination = res.data.pagination;
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
   },
   created() {

@@ -4,7 +4,7 @@
     <div class="row position-relative bg-light">
       <div class="col-auto d-none d-md-block about__img-first">
         <img
-          src="../assets/images/about_img01.png"
+          src="../../assets/images/about_img01.png"
           class="img-fluid"
           alt="會議室"
         />
@@ -19,8 +19,7 @@
           </p>
           <div class="col-auto d-md-none about__img-first--md">
             <img
-              src="../assets/images/about_img01.png"
-              class=""
+              src="../../assets/images/about_img01.png"
               alt="一群員工在現代會議室開會，展示專業協作的工作環境。"
             />
           </div>
@@ -33,7 +32,7 @@
     <div class="row position-relative bg-white">
       <div class="col-auto d-none d-md-block about__img-second">
         <img
-          src="../assets/images/menu-img.jpg"
+          src="../../assets/images/menu-img.jpg"
           class="img-fluid"
           alt="設計樣本和印刷品，包括一張藍色卡片，展示在開放的雜誌上，背景為淺灰色大理石桌面，呈現專業現代設計風格。"
         />
@@ -55,7 +54,7 @@
           </p>
           <div class="col-auto about__img-second--md">
             <img
-              src="../assets/images/about-img02.png"
+              src="../../assets/images/about-img02.png"
               class="img-fluid"
               alt="藍圖印刷三大核心：印刷品質、客製化服務、合作能力"
             />
@@ -123,7 +122,7 @@
           >
             <div class="article__img">
               <img
-                src="../assets/images/home_img_02.jpg"
+                src="../../assets/images/home_img_02.jpg"
                 alt="大型工業打印機正在打印彩色標籤，背景為工廠環境，展示出高精度的印刷技術。"
               />
               <div>
@@ -162,7 +161,7 @@
           >
             <div class="article__img">
               <img
-                src="../assets/images/home_img_04.jpg"
+                src="../../assets/images/home_img_04.jpg"
                 alt="設計工作區展示色彩樣本、平板電腦上的色彩設計圖、和蘋果電腦，背景為現代辦公桌。"
               />
               <div>

@@ -3,11 +3,12 @@
     <ul class="pagination justify-content-center">
       <li class="page-item" :class="{ disabled: !pages.has_pre }">
         <a
+          aria-label="prePage"
           class="page-link"
           href="#"
           @click.prevent="prePage(pages.current_page)"
-          >Previous</a
-        >
+          ><i class="bi bi-chevron-double-left"></i
+        ></a>
       </li>
       <li
         class="page-item"
@@ -23,11 +24,12 @@
 
       <li class="page-item" :class="{ disabled: !pages.has_next }">
         <a
+          aria-label="currentPage"
           class="page-link"
           href="#"
           @click.prevent="nextPage(pages.current_page)"
-          >Next</a
-        >
+          ><i class="bi bi-chevron-double-right"></i
+        ></a>
       </li>
     </ul>
   </nav>

@@ -44,11 +44,10 @@
       <router-view @userdata="userdata" :userdata="data"></router-view>
     </div>
   </div>
-  <ToastMessages></ToastMessages>
+
 </template>
 <script>
 import emitter from '@/methods/emitter';
-import ToastMessages from '@/components/ToastMessages.vue';
 
 export default {
   data() {
@@ -64,9 +63,7 @@ export default {
       to: ['/order/cart', '/order/info', '/order/confirm', '/order/finish'],
     };
   },
-  components: {
-    ToastMessages,
-  },
+
   methods: {
     userdata(item) {
       this.data = item;

@@ -1,0 +1,34 @@
+@use '../vendors-extensions/variables' as *;
+@use '../vendors/bootstrap' as *;
+.userCard__menu {
+  li {
+    border-radius: 25px;
+    border: 1px solid rgb(44, 81, 174, 0);
+    transition: all 0.2s ease-in-out;
+    a {
+      transition: all 0.1s ease-in-out;
+      color: $gray-400;
+      i {
+        transition: all 0.1s ease-in-out;
+      }
+    }
+  }
+  li:hover {
+    background-color: $primary;
+    background-color: rgb(44, 81, 174, 0.1);
+    border: 1px solid rgb(44, 81, 174, 0.2);
+    a {
+      color: $dark;
+      i {
+        color: $primary;
+      }
+    }
+  }
+  a.active {
+    color: $dark;
+    font-weight: 600;
+    i {
+      color: $primary;
+    }
+  }
+}

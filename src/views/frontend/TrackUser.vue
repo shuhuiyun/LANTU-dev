@@ -13,7 +13,11 @@
     ><span style="width: 20px; height: 20px"></span>
   </button>
   <div class="accordion accordion-flush" id="accordionFlushExample">
-    <div class="accordion-item" v-for="(item, index) in tempOrder" :key="item.id">
+    <div
+      class="accordion-item"
+      v-for="(item, index) in tempOrder"
+      :key="item.id"
+    >
       <h2 class="accordion-header" :id="`flush-headingOne${index}`">
         <button
           class="accordion-button collapsed shadow-none"
@@ -49,7 +53,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
-              @click.prevent="pay(item.id)"
+              @click="pay(item.id)"
             >
               前往付款
             </button>
@@ -137,11 +141,18 @@ export default {
   methods: {
     pay(id) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/pay/${id}`;
-      this.$http.post(api).then(() => {
-        this.getOrders(this.$route.params.ordermail);
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .post(api)
+        .then(() => {
+          this.getOrders(this.$route.params.ordermail);
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得商品失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     addTotal(Arr) {
       let total = 0;
@@ -164,16 +175,23 @@ export default {
     },
     getOrders(email, page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/orders/?page=${page}`;
-      this.$http.get(api).then((res) => {
-        this.orders = res.data.orders;
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.orders = res.data.orders;
 
-        const Arr = this.orders.filter((item) => item.user.email === email);
-        this.tempOrder = Arr;
+          const Arr = this.orders.filter((item) => item.user.email === email);
+          this.tempOrder = Arr;
 
-        this.pagination = res.data.pagination;
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+          this.pagination = res.data.pagination;
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得商品失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     open() {},
   },

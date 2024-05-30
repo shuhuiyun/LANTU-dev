@@ -29,7 +29,7 @@
           <button
             type="button"
             class="btn btn-danger"
-            @click.prevent="$emit('del-product', product)"
+            @click="$emit('del-product', product)"
           >
             確認
           </button>

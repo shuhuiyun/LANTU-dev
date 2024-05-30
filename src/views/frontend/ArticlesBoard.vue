@@ -10,7 +10,7 @@
         <div class="row justify-content-center">
           <div class="col-auto px-5 d-none d-md-block">
             <img
-              src="../assets/images/article_info_picture.jpg"
+              src="../../assets/images/article_info_picture.jpg"
               class="img-fluid"
               alt="設計樣本和印刷品，包括精裝本書籍、一本淺藍色便條紙，以及手帳攤開展示在桌面上，呈現專業現代設計風格。"
             />

@@ -63,7 +63,7 @@
     <div class="row justify-content-between order__padding mt-4">
       <button
         type="button"
-        @click.prevent="$router.push('/order/info')"
+        @click="$router.push('/order/info')"
         class="col-auto col-lg-auto btn btn-outline-primary order__btn"
       >
         上一步
@@ -71,7 +71,7 @@
       <button
         type="button"
         class="col-auto col-lg-auto btn btn-primary order__btn"
-        @click.prevent="finishOrder"
+        @click="finishOrder"
       >
         送出訂單
       </button>
@@ -90,17 +90,25 @@ export default {
       total: {},
     };
   },
+  inject: ['emitter', '$httpMessageState'],
   methods: {
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/cart`;
-      this.$http.get(api).then((res) => {
-        this.isLoading = false;
-        this.product = res.data.data.carts;
-        this.total.final_total = res.data.data.final_total;
-        this.total.total = res.data.data.total;
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.isLoading = false;
+          this.product = res.data.data.carts;
+          this.total.final_total = res.data.data.final_total;
+          this.total.total = res.data.data.total;
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     finishOrder() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/order`;
@@ -114,11 +122,18 @@ export default {
         message: this.userdata.message,
       };
 
-      this.$http.post(api, { data: order }).then(() => {
-        this.$router.push('/order/finish');
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .post(api, { data: order })
+        .then(() => {
+          this.$router.push('/order/finish');
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得訂單失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
   },
   created() {

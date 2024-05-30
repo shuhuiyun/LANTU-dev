@@ -74,7 +74,7 @@
               class="btn btn-light rounded-0 px-3"
               :disabled="!productNum"
               aria-label="dash"
-              @click.prevent="subNum"
+              @click="subNum"
             >
               <i class="bi bi-dash-lg"></i></button
             ><span class="mx-4 fw-bold fs-5">{{ productNum }}</span>
@@ -83,7 +83,7 @@
               class="btn btn-light rounded-0 px-3"
               :disabled="productNum == 10"
               aria-label="dash"
-              @click.prevent="addNum"
+              @click="addNum"
             >
               <i class="bi bi-plus-lg"></i>
             </button>
@@ -94,7 +94,7 @@
             type="button"
             style="min-height: 48px"
             class="btn btn-lg btn-primary w-100 d-flex align-items-center justify-content-center"
-            @click.prevent="addcart(product.id, productNum)"
+            @click="addcart(product.id, productNum)"
             :disabled="status.loadingItem == product.id"
           >
             <div
@@ -127,10 +127,52 @@
           </li>
         </ul>
       </div>
+      <p class="col-11 h4 fw-bold px-0 pb-3 position-relative">你可能會喜歡</p>
+      <swiper
+        :loop="true"
+        :navigation="true"
+        :modules="modules"
+        :pagination="{ clickable: true }"
+        :slides-per-view="2"
+        :space-between="20"
+        :breakpoints="{
+          '640': {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          '992': {
+            slidesPerView: 4,
+            spaceBetween: 30,
+          },
+        }"
+        :autoplay="false"
+        @slideChange="onSlideChange"
+        class="col-11 pb-5 px-3"
+        style="height: auto"
+      >
+        <swiper-slide v-for="item in swiperArr" :key="item.title">
+          <div class="border border-1">
+            <a
+              href="#"
+              @click.prevent="toProduct(item.id, item.imageUrl)"
+              :aria-label="item.title"
+            >
+              <img :src="item.imageUrl" alt="" class="img-fluid" />
+            </a>
+          </div>
+        </swiper-slide>
+      </swiper>
     </div>
   </div>
 </template>
 <script>
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from 'swiper/vue';
+
+// Import Swiper styles
+import '@/assets/vendors/swiper.scss';
+// import required modules
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/stores/user';
 
@@ -141,23 +183,46 @@ export default {
       mainImage: '',
       ProductID: '',
       product: [],
+      totalProducts: [],
+      swiperArr: [],
+      totalArr: [],
     };
+  },
+  inject: ['emitter', '$httpMessageState'],
+  watch: {
+    $route() {
+      // 当路由变化时调用的方法
+      this.fetchData();
+    },
+  },
+  components: {
+    Swiper,
+    SwiperSlide,
   },
   computed: {
     ...mapState(userStore, ['status']),
   },
+
   methods: {
     ...mapActions(userStore, ['addcart']),
+
     getProduct() {
       this.isLoading = true;
       const id = this.ProductID;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/product/${id}`;
-      this.$http.get(api).then((res) => {
-        this.product = res.data.product;
-        this.isLoading = false;
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.product = res.data.product;
+          this.isLoading = false;
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得商品失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     addNum() {
       if (this.productNum < 10) {
@@ -172,11 +237,95 @@ export default {
     changeImage(item) {
       this.mainImage = item;
     },
+    toProduct(id, img) {
+      this.mainImage = img;
+      this.ProductID = id;
+      this.getProduct();
+      this.getProducts();
+      this.$router.push(`/user/product/${id}`);
+    },
+    getProducts(page = 1) {
+      this.mainImage = '';
+      this.isActive = -1;
+      this.isLoading = true;
+      const productPromises = [];
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/products/?page=${page}`;
+      this.$http
+        .get(api)
+        .then((res) => {
+          for (let i = 1; i <= res.data.pagination.total_pages; i += 1) {
+            productPromises.push(this.getTotalProducts(i));
+          }
+          // Promise
+          Promise.all(productPromises)
+            .then((allProducts) => {
+              const combinedProducts = [].concat(...allProducts);
+              this.swiperTemp(...combinedProducts);
+              this.products = res.data.products;
+              this.tempProducts = this.products;
+              this.paginationOpen = true;
+              this.pagination = res.data.pagination;
+              this.isLoading = false;
+            })
+            .catch(() => {
+              this.emitter.emit('push-message', {
+                style: 'danger',
+                title: '取得商品失敗',
+                content: '抱歉，出現系統問題，請聯絡我們！',
+              });
+              this.isLoading = false;
+            });
+          this.products = res.data.products;
+          this.tempProducts = this.products;
+          this.paginationOpen = true;
+          this.pagination = res.data.pagination;
+          this.isLoading = false;
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得商品失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
+    },
+    async getTotalProducts(page = 1) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/products/?page=${page}`;
+      try {
+        const res = await this.$http.get(api);
+        return res.data.products;
+      } catch (error) {
+        this.emitter.emit('push-message', {
+          style: 'danger',
+          title: '取得商品失敗',
+          content: '抱歉，出現系統問題，請聯絡我們！',
+        });
+        return [];
+      }
+    },
+    swiperTemp(...Arr) {
+      const id = this.$route.params.productId;
+      const newArr = Arr.filter((item) => item.id !== id);
+
+      newArr.sort(() => Math.random() - 0.5);
+      this.swiperArr = newArr.slice(0, 10);
+    },
+    fetchData() {
+      this.ProductID = this.$route.params.productId;
+      this.productNum = 1;
+      this.getProduct();
+      this.getProducts();
+    },
   },
   created() {
-    this.productNum = 1;
-    this.ProductID = this.$route.params.productId;
-    this.getProduct();
+    this.fetchData();
+  },
+  setup() {
+    const onSlideChange = () => {};
+    return {
+      onSlideChange,
+      modules: [Autoplay, Navigation, Pagination],
+    };
   },
 };
 </script>

@@ -6,4 +6,17 @@
       </div>
     </div>
   </div>
+
 </template>
+<script>
+import emitter from '@/methods/emitter';
+
+export default {
+
+  provide() {
+    return {
+      emitter,
+    };
+  },
+};
+</script>

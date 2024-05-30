@@ -68,7 +68,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-danger"
-                  @click.prevent="delImage(index)"
+                  @click="delImage(index)"
                 >
                   移除
                 </button>
@@ -214,7 +214,7 @@
           <button
             type="button"
             class="btn btn-primary"
-            @click.prevent="$emit('update-product', tempProduct, imagesUrl)"
+            @click="$emit('update-product', tempProduct, imagesUrl)"
           >
             上傳
           </button>
@@ -262,7 +262,7 @@ export default {
   components: {
     Ckeditor: CKEditor.component,
   },
-
+  inject: ['emitter', '$httpMessageState'],
   methods: {
     uploadFile() {
       const uploadedFile = this.$refs.fileInput.files[0];
@@ -271,15 +271,22 @@ export default {
 
       formData.append('file-to-upload', uploadedFile);
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/admin/upload`;
-      this.$http.post(api, formData).then((res) => {
-        if (res.data.success) {
-          this.imagesUrl.push(res.data.imageUrl);
-          this.firstImage(this.imagesUrl[0]);
-          this.$refs.fileInput.value = '';
-        }
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      this.$http
+        .post(api, formData)
+        .then((res) => {
+          if (res.data.success) {
+            this.imagesUrl.push(res.data.imageUrl);
+            this.firstImage(this.imagesUrl[0]);
+            this.$refs.fileInput.value = '';
+          }
+        })
+        .catch(() => {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '取得商品失敗',
+            content: '抱歉，出現系統問題，請聯絡我們！',
+          });
+        });
     },
     firstImage(item = '') {
       this.tempProduct.imageUrl = item;

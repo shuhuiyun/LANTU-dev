@@ -28,7 +28,7 @@
           <button
             type="button"
             class="btn btn-danger"
-            @click.prevent="$emit('del-order', order)"
+            @click="$emit('del-order', order)"
           >
             確認
           </button>

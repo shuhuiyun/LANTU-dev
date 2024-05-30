@@ -98,7 +98,7 @@
           <button
             type="button"
             class="btn btn-primary"
-            @click.prevent="$emit('update-order', tempCoupons)"
+            @click="$emit('update-order', tempCoupons)"
           >
             上傳
           </button>

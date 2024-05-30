@@ -7,10 +7,10 @@
 
     border-radius: 80px 0 0 0;
     padding: 80px 15%;
-    @include media-breakpoint-down(md) {
-      .main__contain {
-        padding: 10%;
-      }
+  }
+  @include media-breakpoint-down(md) {
+    .main__contain {
+      padding:80px 3%;
     }
   }
   .info {

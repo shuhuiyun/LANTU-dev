@@ -47,7 +47,7 @@
       </div>
     </div>
   </div>
-  <ToastMessages></ToastMessages>
+  <ToastMessages />
 </template>
 
 <script>
@@ -55,13 +55,14 @@ import emitter from '@/methods/emitter';
 import ToastMessages from '@/components/ToastMessages.vue';
 
 export default {
-  components: {
-    ToastMessages,
-  },
+
   provide() {
     return {
       emitter,
     };
+  },
+  components: {
+    ToastMessages,
   },
   created() {
     const token = document.cookie.replace(
@@ -70,13 +71,20 @@ export default {
     );
     this.$http.defaults.headers.common.Authorization = token;
     const api = `${process.env.VUE_APP_API}api/user/check`;
-    this.$http.post(api, this.user).then((res) => {
-      if (!res.data.success) {
-        this.$router.push('login');
-      }
-    }).catch((error) => {
-      console.error('錯誤:', error);
-    });
+    this.$http
+      .post(api, this.user)
+      .then((res) => {
+        if (!res.data.success) {
+          this.$router.push('login');
+        }
+      })
+      .catch((res) => {
+        this.emitter.emit('push-message', {
+          style: 'danger',
+          title: '登入失敗',
+          content: res.data.message.join('、'),
+        });
+      });
   },
 };
 </script>
