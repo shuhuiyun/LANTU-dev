@@ -59,7 +59,6 @@ export default {
         .post(api, this.user)
         .then((res) => {
           if (res.data.success) {
-            console.log(res);
             const { token, expired } = res.data;
             document.cookie = `userToken=${token}; expires=${new Date(
               expired,

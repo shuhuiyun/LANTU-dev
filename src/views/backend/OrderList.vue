@@ -69,10 +69,7 @@
       </tbody>
     </table>
 
-    <PageNavigation
-      @emit-page="getProducts"
-      :pages="pagination"
-    />
+    <PageNavigation @emit-page="getProducts" :pages="pagination" />
   </div>
   <div class="fs-2" v-if="!orders">目前還沒有訂單。</div>
   <OrderModal
@@ -130,7 +127,6 @@ export default {
         .then((res) => {
           this.isLoading = false;
           this.orders = res.data.orders;
-          console.log(this.orders);
           this.pagination = res.data.pagination;
         })
         .catch(() => {
