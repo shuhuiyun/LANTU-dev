@@ -7,7 +7,6 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      logo: false,
       title: '首頁 - 藍圖印刷',
     },
   },

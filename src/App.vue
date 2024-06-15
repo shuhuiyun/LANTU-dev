@@ -20,8 +20,9 @@
 </template>
 
 <style lang="scss">
-@import './assets/all.css';
+@import './assets/all';
 </style>
+
 <script>
 import emitter from '@/methods/emitter';
 import ToastMessages from '@/components/ToastMessages.vue';

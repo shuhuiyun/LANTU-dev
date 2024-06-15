@@ -207,7 +207,7 @@ $fluid-height: calc(100vh - #{86px});
   font-size: 8rem;
   color: $primary;
   position: absolute;
-  left: 2%;
+  left: -5%;
   span {
     position: absolute;
     top: 25px;
@@ -222,7 +222,7 @@ $fluid-height: calc(100vh - #{86px});
       transform: translate(50%, -100%);
     }
   }
-  @include media-breakpoint-down(lg) {
+  @include media-breakpoint-down(xl) {
     span {
       display: none;
     }
@@ -230,7 +230,7 @@ $fluid-height: calc(100vh - #{86px});
 }
 @include media-breakpoint-down(lg) {
   .articles_title {
-    left: -7.5%;
+    left: -5%;
   }
 }
 .articles_content {
@@ -322,7 +322,7 @@ $fluid-height: calc(100vh - #{86px});
   span {
     position: absolute;
     top: 25px;
-    right: 0px;
+    right: -24px;
     span {
       position: absolute;
       background-color: $info;
