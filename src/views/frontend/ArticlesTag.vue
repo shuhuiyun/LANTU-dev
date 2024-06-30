@@ -1,9 +1,11 @@
 <template>
   <div class="article-list">
     <h2 class="fw-bold text-primary">{{ `#${tag}` }}</h2>
+
     <p class="mb-5">
       {{ `搜尋結果：共有 ${tempArticles.length} 筆資料符合 #${tag}` }}
     </p>
+
     <ul class="p-0">
       <li v-for="item in tempArticles" :key="item.id">
         <div>
@@ -44,7 +46,7 @@
                 <router-link
                   class="me-3 text-dark text-opacity-50"
                   v-for="(tag, index) in item.tag"
-                  :key="`${tag}${index+1}`"
+                  :key="`${tag}${index + 1}`"
                   to="/article/search_tag"
                   @click.prevent="searchTag(tag)"
                 >
@@ -90,6 +92,5 @@ export default {
   created() {
     this.getArticleList();
   },
-  mounted() {},
 };
 </script>

@@ -1,4 +1,3 @@
-<!-- eslint-disable max-len -->
 <template>
   <footer class="container-fluid py-5 bg-dark px-0">
     <!-- 跑馬燈 -->
@@ -23,7 +22,7 @@
     <!-- 內容 -->
     <div class="row flex-row-reverse justify-content-around px-0 mx-0">
       <div class="col-xl-4 col-lg-5 col light__content">
-        <menuContent></menuContent>
+        <MenuContent />
       </div>
 
       <div class="footer__info py-4 col-md-4 text-start">
@@ -37,7 +36,11 @@
         <p class="text-white text-start mb-0">
           上午09:00-下午17:00 <br />臺中市北區四五六路78號<br />
         </p>
-        <a href="tel:+886-2-22349876"  class="link-light link-underline-opacity-0">02-2234-9876</a>
+        <a
+          href="tel:+886-2-22349876"
+          class="link-light link-underline-opacity-0"
+          >02-2234-9876</a
+        >
         <ul class="d-flex ps-0 mt-3">
           <li>
             <a href="#" class="icon-buttom position-relative" aria-label="Line"
@@ -64,7 +67,8 @@
               class="icon-buttom position-relative"
               aria-label="Ins"
               ><i
-                class="bi bi-instagram text-white position-absolute top-50 start-50 translate-middle"
+                class="bi bi-instagram text-white
+                position-absolute top-50 start-50 translate-middle"
               ></i
             ></a>
           </li>
@@ -76,7 +80,8 @@
       <span>
         <router-link
           to="/login"
-          class="text-white-50 link-offset-3-hover link-underline-light link-underline-opacity-0 link-underline-opacity-75-hover"
+          class="text-white-50 link-offset-3-hover
+          link-underline-light link-underline-opacity-0 link-underline-opacity-75-hover"
         >
           管理員登入</router-link
         >
@@ -86,14 +91,14 @@
 </template>
 
 <script>
-import menuContent from '@/components/MenuContent.vue';
+import MenuContent from '@/components/MenuContent.vue';
 
 export default {
   data() {
     return {};
   },
   components: {
-    menuContent,
+    MenuContent,
   },
 };
 </script>

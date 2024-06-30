@@ -1,6 +1,6 @@
 <!-- eslint-disable max-len -->
 <template>
-  <LoadingSpinner :active="isLoading"></LoadingSpinner>
+  <LoadingSpinner :active="isLoading" />
   <div class="container pb-4" v-if="product[0]">
     <div class="row d-none d-lg-flex py-4 border-bottom order__padding">
       <div class="col-1 p-0">商品</div>
@@ -74,24 +74,33 @@
     </div>
     <div>
       <div class="mb-3 d-block d-md-none">
-        <div class="input-group pt-4">
-          <input
-            v-model="coupon_code"
-            type="text"
-            class="form-control"
-            placeholder="輸入優惠券"
-            aria-label="輸入優惠券"
-            aria-describedby="button-addon2"
-          />
-          <button
-            class="btn btn-primary"
-            type="button"
-            id="button-addon2"
-            @click="addCouponCode"
-          >
-            送出
-          </button>
-        </div>
+        <VForm v-slot="{ errors }">
+          <div class="input-group pt-4">
+            <VField
+              v-model="coupon_code"
+              name="優惠券"
+              class="form-control"
+              id="coupon"
+              placeholder="輸入優惠券"
+              aria-label="輸入優惠券"
+              type="text"
+              :class="{ 'is-invalid': errors['優惠券'] }"
+              rules="required"
+            />
+
+            <button
+              class="btn btn-primary rounded-end-pill"
+              type="button"
+              id="button-addon2"
+              @click="addCouponCode"
+            >
+              送出
+            </button>
+            <div id="couponFeedback" class="invalid-feedback">
+              尚未輸入優惠券
+            </div>
+          </div>
+        </VForm>
       </div>
     </div>
     <div
@@ -99,24 +108,32 @@
     >
       <!-- 優惠券輸入 -->
       <div class="col-10 p-4 p-lg-0 col-md-6 col-lg-4 mb-3 d-none d-md-block">
-        <div class="input-group mb-3">
-          <input
-            v-model="coupon_code"
-            type="text"
-            class="form-control"
-            placeholder="輸入優惠券"
-            aria-label="輸入優惠券"
-            aria-describedby="button-addon2"
-          />
-          <button
-            class="btn btn-primary"
-            type="button"
-            id="button-addon2"
-            @click="addCouponCode"
-          >
-            送出
-          </button>
-        </div>
+        <VForm v-slot="{ errors }">
+          <div class="input-group mb-3">
+            <VField
+              v-model="coupon_code"
+              name="優惠券"
+              class="form-control"
+              id="coupon"
+              placeholder="輸入優惠券"
+              aria-label="輸入優惠券"
+              type="text"
+              :class="{ 'is-invalid': errors['優惠券'] }"
+              rules="required"
+            />
+            <button
+              class="btn btn-primary rounded-end-pill"
+              type="button"
+              id="button-addon2"
+              @click="addCouponCode"
+            >
+              送出
+            </button>
+            <div id="couponFeedback" class="invalid-feedback">
+              尚未輸入優惠券
+            </div>
+          </div>
+        </VForm>
       </div>
       <!-- 金額總計 -->
       <div class="col-10 col-md-6 order__padding-right border-bottom">
@@ -207,7 +224,8 @@ export default {
       const cart = { code: this.coupon_code };
       this.$http
         .post(api, { data: cart })
-        .then(() => {
+        .then((response) => {
+          this.$httpMessageState(response, '優惠券取得');
           this.isCouponCode = true;
           this.getProducts();
         })

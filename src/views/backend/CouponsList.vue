@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner :active="isLoading"></LoadingSpinner>
+  <LoadingSpinner :active="isLoading" />
 
   <div class="g-5 products-list__content">
     <div class="row mt-5 border-bottom border-primary pb-4 border-1">
@@ -125,7 +125,7 @@ export default {
       this.tempOrder = item;
       let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/admin/coupon`;
       let httpMethod = 'post';
-      // 編輯
+
       if (!this.isNew) {
         api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/admin/coupon/${item.id}`;
         httpMethod = 'put';

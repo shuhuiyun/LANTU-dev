@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner :active="isLoading"></LoadingSpinner>
+  <LoadingSpinner :active="isLoading" />
 
   <div class="g-5 products-list__content">
     <div class="row mt-5 border-bottom border-primary pb-4 border-1">

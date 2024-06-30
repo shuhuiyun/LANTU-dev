@@ -8,19 +8,12 @@
     <div class="col-auto px-5" style="padding-top: 10%">
       <VForm v-slot="{ errors }" ref="observer" @submit="search(email)">
         <div class="input-group">
-          <!-- <input
-              v-model="email"
-              type="text"
-              class="form-control"
-              placeholder="輸入信箱"
-              aria-label="輸入信箱"
-              aria-describedby="button-addon2"
-            /> -->
           <VField
             name="信箱"
             class="form-control"
             id="inputEmail"
             type="email"
+            placeholder="輸入信箱查詢訂單"
             v-model="email"
             :class="{ 'is-invalid': errors['信箱'] }"
             rules="email|required"
@@ -36,9 +29,6 @@
           </button>
           <ErrorMessage ref="error" name="信箱" class="invalid-feedback p-0" />
         </div>
-        <!-- <div class="text-danger p-2 fs-7" v-if="!emailCheck && !errors['信箱']">
-          未查詢到該訂單，請嘗試在輸入一次。
-        </div> -->
       </VForm>
       <ol class="track__ol fs-7 mt-3" style="padding-bottom: 20%">
         <li>請於訂購完成後三天內付款，否則訂單將被取消。</li>
@@ -52,7 +42,6 @@
       </ol>
     </div>
   </div>
-
 </template>
 <script>
 export default {

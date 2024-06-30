@@ -23,20 +23,26 @@ export default defineStore('User Store', {
       this.status.loadingItem = id;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/cart`;
       const cart = { product_id: id, qty: num };
-      axios.post(api, { data: cart }).then(() => {
-        this.status.loadingItem = '';
-        this.getProducts();
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      axios
+        .post(api, { data: cart })
+        .then(() => {
+          this.status.loadingItem = '';
+          this.getProducts();
+        })
+        .catch((error) => {
+          console.error('錯誤:', error);
+        });
     },
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_API_PATH}/cart`;
-      axios.get(api).then((res) => {
-        this.product = res.data.data.carts;
-      }).catch((error) => {
-        console.error('錯誤:', error);
-      });
+      axios
+        .get(api)
+        .then((res) => {
+          this.product = res.data.data.carts;
+        })
+        .catch((error) => {
+          console.error('錯誤:', error);
+        });
     },
   },
 });

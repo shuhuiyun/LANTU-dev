@@ -1,9 +1,9 @@
 <template>
-  <LoadingSpinner :active="isLoading"></LoadingSpinner>
+  <LoadingSpinner :active="isLoading" />
   <div class="article-list">
     <h2 class="fw-bold text-primary mb-5">最新文章列表</h2>
     <ul class="p-0">
-      <li v-for="(item) in articles" :key="item.id">
+      <li v-for="item in articles" :key="item.id">
         <div>
           <div class="row py-3">
             <div class="col-md-6 mb-3 mb-0-md">
@@ -43,7 +43,7 @@
                 <router-link
                   class="me-3 text-dark text-opacity-50 text-nowrap d-inline-block mb-1"
                   v-for="(tag, index) in item.tag"
-                  :key="`${tag}${index+1}`"
+                  :key="`${tag}${index + 1}`"
                   to="/article/search_tag"
                   @click.prevent="searchTag(tag)"
                 >
@@ -79,6 +79,5 @@ export default {
   created() {
     this.getArticleList();
   },
-  mounted() {},
 };
 </script>

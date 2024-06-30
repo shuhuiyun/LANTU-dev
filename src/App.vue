@@ -12,16 +12,12 @@
       :cartBtn="$route.meta.cartButton"
       :menuBtn="$route.meta.menuButton"
       :homeLogo="$route.meta.logo"
-    ></MainNavbar>
+    />
     <router-view />
-    <MainFooter v-if="Footer == undefined ? true : Footer"></MainFooter>
+    <MainFooter v-if="Footer == undefined ? true : Footer" />
     <ToastMessages />
   </div>
 </template>
-
-<style lang="scss">
-@import './assets/all';
-</style>
 
 <script>
 import emitter from '@/methods/emitter';
@@ -58,3 +54,6 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+@import './assets/scss/all';
+</style>

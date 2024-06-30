@@ -123,7 +123,6 @@ export default {
   watch: {
     coupon() {
       this.tempCoupons = this.coupon;
-      // 轉換時間格式為YYYY-MM-DD
       const dateAndTime = new Date(this.tempCoupons.due_date * 1000)
         .toISOString()
         .split('T');
@@ -140,7 +139,6 @@ export default {
       due_date: '',
     };
   },
-  methods: {},
   mixins: [modal],
 };
 </script>

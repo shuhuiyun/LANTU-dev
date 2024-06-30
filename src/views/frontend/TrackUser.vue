@@ -6,7 +6,6 @@
       訂單查詢
     </div>
   </div>
-  <!-- 測試 -->
   <button type="button" class="accordion-button accordion-item p-3">
     <span class="d-none d-md-block">訂單編號</span><span>購買日期</span
     ><span>總金額</span><span>訂單狀態</span
@@ -126,7 +125,6 @@
       </div>
     </div>
   </div>
-  <!-- 測試 -->
 </template>
 <script>
 import Collapse from 'bootstrap/js/dist/collapse';
@@ -193,7 +191,6 @@ export default {
           });
         });
     },
-    open() {},
   },
   created() {
     this.getOrders(this.$route.params.ordermail);

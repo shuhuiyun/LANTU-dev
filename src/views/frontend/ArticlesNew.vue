@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner :active="isLoading"></LoadingSpinner>
+  <LoadingSpinner :active="isLoading" />
   <div class="ArticlesNew container-fluid">
     <p class="text-primary article__slot">{{ article.author }}</p>
     <h2 class="fs-1 fw-bold text-primary lh-base">
@@ -12,7 +12,7 @@
       <span
         class="me-3 article__tag text-nowrap d-inline-block mb-3"
         v-for="(item, index) in article.tag"
-        :key="`${item}${index+1}`"
+        :key="`${item}${index + 1}`"
         ><router-link
           to="/article/search_tag"
           @click.prevent="searchTag(item)"
@@ -21,10 +21,10 @@
       >
     </p>
     <div class="row">
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-6 mb-3">
         <img
           :src="article.image"
-          class="img-fluid w-100 h-100"
+          class="img-fluid w-100 h-100 b-3"
           :alt="`${article.title}`"
           style="max-height: 600px; object-fit: cover"
         />

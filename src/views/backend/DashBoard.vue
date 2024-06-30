@@ -43,7 +43,7 @@
         </ul>
       </div>
       <div class="col-10 g-5 products-list__content">
-        <router-view></router-view>
+        <router-view />
       </div>
     </div>
   </div>

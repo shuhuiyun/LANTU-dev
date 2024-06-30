@@ -159,19 +159,11 @@
               <div class="input-group mb-3">
                 <label for="description" class="form-label text-start col"
                   >規格
-                  <!-- <textarea
-                    v-model="tempProduct.description"
-                    class="form-control"
-                    placeholder="請輸入產品描述"
-                    id="description"
-                    style="resize: none"
-                  ></textarea> -->
                 </label>
                 <div class="input-group mb-3">
                   <Ckeditor
                     :editor="editor"
-                    v-model="tempProduct.description"
-                  ></Ckeditor>
+                    v-model="tempProduct.description"/>
                 </div>
               </div>
               <div class="input-group mb-3">
@@ -181,8 +173,7 @@
                 <div class="input-group mb-3">
                   <Ckeditor
                     :editor="editor"
-                    v-model="tempProduct.content"
-                  ></Ckeditor>
+                    v-model="tempProduct.content"/>
                 </div>
               </div>
               <div class="mb-3">

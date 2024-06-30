@@ -10,11 +10,6 @@
         <h1 class="align-content-center m-0 nav__logo--sm">LAN-TU</h1>
       </a>
     </div>
-    <!-- <a href="https://www.instagram.com/"
-    target="_blank" class="icon-buttom position-relative"
-    aria-label="Ins">
-    <i class="bi bi-instagram text-white
-    position-absolute top-50 start-50 translate-middle"></i></a> -->
     <div
       class="col-auto p-1"
       style="min-width: 45px"
@@ -79,7 +74,7 @@
       </div>
     </div>
   </nav>
-  <MenuModal ref="menuModal" @hide-modal="hideModal"></MenuModal>
+  <MenuModal ref="menuModal" @hide-modal="hideModal" />
 </template>
 <script>
 import MenuModal from '@/components/MenuModal.vue';

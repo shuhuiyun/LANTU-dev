@@ -28,7 +28,7 @@
               alt="設計樣本和印刷品，包括一張藍色卡片，展示在開放的雜誌上，背景為淺灰色大理石桌面，呈現專業現代設計風格。"
             />
           </div>
-          <MenuContent class="col-auto mx-auto"></MenuContent>
+          <MenuContent class="col-auto mx-auto" />
         </div>
       </div>
     </div>
@@ -49,7 +49,6 @@ export default {
       title: '',
     };
   },
-  methods: {},
   mixins: [modal],
 };
 </script>

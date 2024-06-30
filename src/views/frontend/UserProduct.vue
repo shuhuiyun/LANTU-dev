@@ -1,5 +1,5 @@
 <template>
-  <LoadingSpinner :active="isLoading"></LoadingSpinner>
+  <LoadingSpinner :active="isLoading" />
   <div class="container">
     <div class="row my-5 justify-content-center">
       <!-- 商品圖 -->
@@ -157,7 +157,7 @@
               @click.prevent="toProduct(item.id, item.imageUrl)"
               :aria-label="item.title"
             >
-              <img :src="item.imageUrl" alt="" class="img-fluid" />
+              <img :src="item.imageUrl" alt="推薦商品圖片" class="img-fluid" />
             </a>
           </div>
         </swiper-slide>
@@ -166,12 +166,8 @@
   </div>
 </template>
 <script>
-// Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue';
-
-// Import Swiper styles
-import '@/assets/vendors/swiper.scss';
-// import required modules
+import '@/assets/scss/vendors/swiper.scss';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { mapState, mapActions } from 'pinia';
 import userStore from '@/stores/user';
@@ -191,7 +187,6 @@ export default {
   inject: ['emitter', '$httpMessageState'],
   watch: {
     $route() {
-      // 当路由变化时调用的方法
       this.fetchData();
     },
   },
@@ -256,7 +251,6 @@ export default {
           for (let i = 1; i <= res.data.pagination.total_pages; i += 1) {
             productPromises.push(this.getTotalProducts(i));
           }
-          // Promise
           Promise.all(productPromises)
             .then((allProducts) => {
               const combinedProducts = [].concat(...allProducts);

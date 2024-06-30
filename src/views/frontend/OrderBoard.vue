@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="bg-white rounded-4 rounded-bottom-0">
-      <router-view @userdata="userdata" :userdata="data"></router-view>
+      <router-view @userdata="userdata" :userdata="data" />
     </div>
   </div>
 

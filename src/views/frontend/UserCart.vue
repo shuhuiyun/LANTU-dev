@@ -1,6 +1,5 @@
-<!-- eslint-disable max-len -->
 <template>
-  <LoadingSpinner :active="isLoading"></LoadingSpinner>
+  <LoadingSpinner :active="isLoading" />
   <div class="container my-5 bg-white mx-auto">
     <div class="row g-5 d-flex flex-md-row flex-column mx-2">
       <ul class="p-0 col col-lg-2 bg-white pb-4 userCard__menu">
@@ -24,15 +23,17 @@
         </li>
       </ul>
 
-      <div class="col-md-9 col col-lg-9">
+      <div class="col-md-9 col col-lg-9 ">
         <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 gx-4">
           <!-- 商品 -->
           <div
-            class="col user-board__products mb-4"
+            class="col user-board__products mb-4 "
             v-for="item in tempProducts"
             :key="item.id"
           >
-            <a aria-label="img" href="#" @click.prevent="getProduct(item.id)">
+            <a aria-label="img" class="link-underline link-underline-opacity-0"
+            href="#" @click.prevent="getProduct(item.id)"
+            >
               <img
                 :src="item.imageUrl"
                 v-if="item.imageUrl"
@@ -47,22 +48,17 @@
                 style="aspect-ratio: 1/1; object-fit: cover"
                 alt="提示:此商品沒有圖片"
               />
-            </a>
-            <div class="p-2">
+            <div class="p-2 position-relative">
               <div
                 class="col text-start fs-5 text-dark lh-sm my-2 fw-bold text-truncate"
               >
-                <a
-                  href="#"
-                  class="link-offset-1 text-dark link-underline-dark link-underline-opacity-0 link-underline-opacity-75-hover"
-                  @click.prevent="getProduct(item.id)"
-                >
-                  {{ item.title }}</a
+                <p class="text-dark mb-0">
+                  {{ item.title }}</p
                 >
               </div>
 
               <div class="row">
-                <div class="col text-start text-danger fs-5">
+                <div class="col text-start text-danger fs-5 ">
                   {{ `$${item.price}`
                   }}<span
                     class="fs-7 ms-1 text-decoration-line-through"
@@ -70,26 +66,29 @@
                     >{{ `$${item.origin_price}` }}</span
                   >
                 </div>
-                <div class="col-auto ms-auto my-auto">
-                  <button
-                    type="button"
-                    style="min-height: 31px; min-width: 60px"
-                    class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center"
-                    :disabled="status.loadingItem == item.id"
-                    @click="addcart(item.id)"
+              </div>
+              <div class="col-auto ms-auto my-auto position-absolute bottom-0 end-0 me-2 mb-2 z-3">
+                <button
+                  type="button"
+                  style="min-height: 31px; min-width: 60px;"
+                  class="
+                  btn btn-sm btn-outline-primary d-flex
+                  align-items-center justify-content-center"
+                  :disabled="status.loadingItem == item.id"
+                  @click="addcart(item.id)"
+                >
+                  <div
+                    v-if="status.loadingItem == item.id"
+                    class="ms-1 spinner-grow spinner-grow-sm"
+                    role="status"
                   >
-                    <div
-                      v-if="status.loadingItem == item.id"
-                      class="ms-1 spinner-grow spinner-grow-sm"
-                      role="status"
-                    >
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <span v-else> 購買 </span>
-                  </button>
-                </div>
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <span v-else> 購買 </span>
+                </button>
               </div>
             </div>
+          </a>
           </div>
         </div>
         <PageNavigation
@@ -177,12 +176,13 @@ export default {
         });
     },
     getProduct(id) {
-      this.$router.push(`/user/product/${id}`);
+      if (this.status.loadingItem === '') {
+        this.$router.push(`/user/product/${id}`);
+      }
     },
 
     categoryProducts(sort, index) {
       this.isActive = index;
-      console.log(this.isActive, index);
 
       this.tempProducts = [];
       this.paginationOpen = false;

@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export default class MyUploadAdapter {
   constructor(loader) {
-    // Save Loader instance to update upload progress.
     this.loader = loader;
   }
 
@@ -13,11 +12,6 @@ export default class MyUploadAdapter {
 
     return axios.post(api, formData).then((res) => {
       if (res.data.success) {
-        // this.tempProduct.image = res.data.imageUrl;
-        // this.$refs.fileInput.value = '';
-
-        //  var resData = res.data;
-
         this.data.default = process.env.VUE_APP_TARGET_URL + res.data.imageUrl;
       } else {
         this.data.default = {};
@@ -26,7 +20,6 @@ export default class MyUploadAdapter {
   }
 
   abort() {
-    //  觸發 FileReader abort 事件
     this.reader.abort();
   }
 }

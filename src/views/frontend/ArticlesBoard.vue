@@ -2,7 +2,7 @@
   <div class="article container-fluid">
     <div class="row">
       <div class="main__contain col-11 bg-white ms-auto">
-        <router-view></router-view>
+        <router-view />
       </div>
     </div>
     <div class="bg-primary bg-opacity-75 info row">

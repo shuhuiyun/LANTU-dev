@@ -113,8 +113,7 @@
               <div class="input-group mb-3">
                 <Ckeditor
                   :editor="editor"
-                  v-model="tempProduct.content"
-                ></Ckeditor>
+                  v-model="tempProduct.content"/>
               </div>
 
               <div class="input-group mb-3">
@@ -227,7 +226,6 @@ export default {
       }
 
       this.tempProduct.image = this.image;
-      // 轉換時間格式為YYYY-MM-DD
       const dateAndTime = new Date(this.tempProduct.create_at * 1000)
         .toISOString()
         .split('T');

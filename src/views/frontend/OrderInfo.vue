@@ -1,4 +1,3 @@
-<!-- eslint-disable max-len -->
 <!-- eslint-disable vuejs-accessibility/label-has-for -->
 <template>
   <div class="container pt-5 pb-4">
@@ -11,7 +10,7 @@
       <div class="row border-bottom pb-4 justify-content-center">
         <div class="row justify-content-center order__padding">
           <div class="col-12 col-md-6 mb-md-4">
-            <label for="inputName" class="form-label w-100 Info__label">
+            <label for="inputName" class="form-label w-100 Info__label" >
               <p class="text-nowrap me-2 mt-2 mb-0">
                 姓名<span class="text-danger">*</span>
               </p>
@@ -139,7 +138,7 @@
               <error-message
                 class="invalid-feedback d-block mt-0 mb-1"
                 name="取貨"
-              ></error-message>
+              />
             </div>
           </div>
           <div class="col-12 d-flex Info__label mb-md-4">
@@ -194,7 +193,7 @@
               <error-message
                 class="invalid-feedback d-block mt-0 mb-1"
                 name="付款"
-              ></error-message>
+              />
             </div>
           </div>
           <div class="col-12 mb-md-4">
